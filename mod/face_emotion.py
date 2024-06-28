@@ -244,10 +244,10 @@ class FaceEmotionFrame(QFrame):
                 plt.close(fig)
 
                 # Add SVM report to PDF
-                if hasattr(self, 'svm_report'):
+                if hasattr(self, 'svm_report') and isinstance(self.svm_report, dict):
                     fig, ax = plt.subplots(figsize=(8, 6))
                     ax.axis('off')
-                    text = f"SVM Classification Report:\n{classification_report(self.svm_report)}"
+                    text = self.classification_report_from_dict(self.svm_report)
                     ax.text(0.5, 0.5, text, transform=ax.transAxes, ha='center', va='center', wrap=True)
                     pdf.savefig(fig)
                     plt.close(fig)
@@ -292,6 +292,17 @@ class FaceEmotionFrame(QFrame):
         except Exception as e:
             QMessageBox.critical(self, "Error", f"Failed to generate PDF report:\n{str(e)}")
 
+    def classification_report_from_dict(self, report_dict):
+        lines = []
+        for label, metrics in report_dict.items():
+            if isinstance(metrics, dict):
+                lines.append(f"Label: {label}")
+                for metric, value in metrics.items():
+                    lines.append(f"  {metric}: {value:.2f}")
+            else:
+                lines.append(f"{label}: {metrics:.2f}")
+        return "\n".join(lines)
+
     def generate_csv_report(self):
         try:
             output_dir = "csv_exports"
@@ -312,9 +323,9 @@ class FaceEmotionFrame(QFrame):
             results_df.to_csv(csv_filename, index=False)
 
             # Save SVM report to CSV
-            if hasattr(self, 'svm_report'):
+            if hasattr(self, 'svm_report') and isinstance(self.svm_report, dict):
                 svm_df = pd.DataFrame(self.svm_report).transpose()
-                svm_df.to_csv(csv_filename, mode='a')
+                svm_df.to_csv(csv_filename, mode='a', header=True)
 
             QMessageBox.information(self, "Report Generated", f"CSV report generated successfully:\n{csv_filename}")
 
