@@ -117,14 +117,14 @@ def DurationCalculatorFunction(parent=None):
                 end_time_epoch = int(end_time.timestamp() * 1000)
 
                 # Calculate duration in both epoch and human-readable formats
-                #duration_epoch = end_time_epoch - start_time_epoch
+                duration_epoch = end_time_epoch - start_time_epoch
                 #duration_human = pd.to_timedelta(duration_epoch, unit='ms')
 
                 # Calculate duration in both epoch and human-readable formats
-                if end_time_epoch >= start_time_epoch:
-                    duration_epoch = end_time_epoch - start_time_epoch
-                else:
-                    duration_epoch = start_time_epoch - end_time_epoch
+                #if end_time_epoch >= start_time_epoch:
+                #    duration_epoch = end_time_epoch - start_time_epoch
+                #else:
+                #    duration_epoch = start_time_epoch - end_time_epoch
 
                 # Convert duration to human-readable format
                 duration_human = pd.to_timedelta(duration_epoch, unit='ms')

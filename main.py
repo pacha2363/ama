@@ -1,8 +1,12 @@
 # main.py
 import os
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QGridLayout, QScrollArea, QMenuBar, QAction, QMessageBox
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QGridLayout, QScrollArea, QMenuBar, QAction, \
+    QMessageBox, QLabel, QVBoxLayout, QDialog
 from datetime import datetime
+
+from mod.about import about_text
+from mod.help import help_text
 from mod.pretest import PreTestFrame
 from mod.posttest import PostTestFrame
 from mod.comparison_pre_post import ComparisonPrePostTestFrame
@@ -110,11 +114,69 @@ class AguidaMultimodalAnalyzer(QMainWindow):
         self.file_menu.addAction(self.duration_calculator_action)
 
         self.help_action = QAction("Help", self)
+        self.help_action.triggered.connect(self.show_help_dialog)  # Connect action to function
         self.help_menu.addAction(self.help_action)
 
         self.about_action = QAction("About", self)
+        self.about_action.triggered.connect(self.show_about_dialog)
         self.help_menu.addAction(self.about_action)
 
+    def show_about_dialog(self):
+        # Create a dialog
+        dialog = QDialog(self)
+        dialog.setWindowTitle('About Aguida Multimodal Analyzer')
+        dialog.setMinimumSize(500, 400)
+
+        # Create a QVBoxLayout for the dialog
+        layout = QVBoxLayout()
+
+        # Create a QLabel to display the about text
+        label = QLabel(about_text)
+        label.setWordWrap(True)
+
+        # Create a QScrollArea
+        scroll_area = QScrollArea()
+        scroll_area.setWidget(label)
+        scroll_area.setWidgetResizable(True)
+        scroll_area.setFixedHeight(400)
+
+        # Add the scroll area to the layout
+        layout.addWidget(scroll_area)
+
+        # Set the layout on the dialog
+        dialog.setLayout(layout)
+
+        # Show the dialog
+        dialog.exec_()
+
+
+    def show_help_dialog(self):
+        # Create a dialog
+        dialog = QDialog(self)
+        dialog.setWindowTitle('Help for Aguida Multimodal Analyzer')
+        dialog.setMinimumSize(500, 400)
+
+        # Create a QVBoxLayout for the dialog
+        layout = QVBoxLayout()
+
+        # Create a QLabel to display the help text
+        label = QLabel(help_text)
+        label.setWordWrap(True)
+
+        # Create a QScrollArea
+        scroll_area = QScrollArea()
+        scroll_area.setWidget(label)
+        scroll_area.setWidgetResizable(True)
+        scroll_area.setFixedHeight(400)
+
+        # Add the scroll area to the layout
+        layout.addWidget(scroll_area)
+
+        # Set the layout on the dialog
+        dialog.setLayout(layout)
+
+        # Show the dialog
+        dialog.exec_()
 
     def open_duration_window(self):
         dialog = DurationCalculator(self)
@@ -168,7 +230,6 @@ class AguidaMultimodalAnalyzer(QMainWindow):
 
         except Exception as e:
             QMessageBox.critical(self, "Error", f"Failed to generate PDF report:\n{str(e)}")
-
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
