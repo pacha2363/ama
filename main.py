@@ -1,8 +1,11 @@
 # main.py
 import os
 import sys
+
+from PyQt5 import Qt
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QGridLayout, QScrollArea, QMenuBar, QAction, \
-    QMessageBox, QLabel, QVBoxLayout, QDialog
+    QMessageBox, QLabel, QVBoxLayout, QDialog, QInputDialog
 from datetime import datetime
 
 from mod.about import about_text
@@ -15,6 +18,7 @@ from mod.tobii import TobiiFrame
 from mod.face_emotion import FaceEmotionFrame
 from mod.dialogflow import DialogFlowFrame
 from mod.systemchoice import SystemChoiceFrame
+from mod.ind_analyzer_window import IndividualAnalyzerWindow
 from mod.determination_time import DurationCalculator
 from mod.duration_calculator import DurationCalculatorFunction
 from fpdf import FPDF
@@ -24,7 +28,7 @@ class AguidaMultimodalAnalyzer(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Aguida Multimodal Analyzer - Version 2.9.2")
-        self.setGeometry(100, 100, 800, 600)
+        self.setGeometry(100, 100, 400, 800)
 
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
@@ -92,6 +96,13 @@ class AguidaMultimodalAnalyzer(QMainWindow):
                 self.layout.addWidget(self.system_choice_frame, i // 3, i % 3)
             # Initialize and add other frames similarly
 
+
+        # Create the footnote label
+        footnote = QLabel("Aguida Multimodal Analyzer (Offline Data) by Aboul Hassane CISSE - Knowledge Information System Lab<br>version 2024.05")
+        footnote.setAlignment(Qt.AlignCenter)
+        footnote.setStyleSheet("color: gray; font-size: 12px; margin-top: 20px;")
+        self.layout.addWidget(footnote)
+
         # Create menu bar
         self.menu_bar = QMenuBar(self)
         self.setMenuBar(self.menu_bar)
@@ -108,6 +119,10 @@ class AguidaMultimodalAnalyzer(QMainWindow):
         #self.calculate_duration_action = QAction("Calculate Duration", self)
         #self.calculate_duration_action.triggered.connect(self.open_duration_window)
         #self.file_menu.addAction(self.calculate_duration_action)
+
+        self.ind_analyzer_window_action = QAction("Individual Analyzer", self)
+        self.ind_analyzer_window_action.triggered.connect(self.individual_analyzer_window)
+        self.file_menu.addAction(self.ind_analyzer_window_action)
 
         self.duration_calculator_action = QAction("Duration Calculator", self)
         self.duration_calculator_action.triggered.connect(self.duration_calculator_window)
@@ -186,8 +201,19 @@ class AguidaMultimodalAnalyzer(QMainWindow):
         dialog = DurationCalculatorFunction(self)
         dialog.exec_()
 
+    def individual_analyzer_window(self):
+        dialog = IndividualAnalyzerWindow(self)
+        dialog.exec_()
+
     def print_report(self):
         try:
+            # Get the report name from the user
+            text, ok = QInputDialog.getText(self, 'Report Name', 'Enter the name for the report:')
+            if not ok or not text.strip():
+                QMessageBox.warning(self, 'Input Error', 'You must enter a valid report name.')
+                return
+            report_name = text.strip()
+
             pdf = FPDF()
 
             # Add a page
@@ -195,7 +221,8 @@ class AguidaMultimodalAnalyzer(QMainWindow):
 
             # Set title
             pdf.set_font("Arial", size=12)
-            pdf.cell(200, 10, txt="Aguida Multimodal Analyzer Report", ln=True, align='C')
+            pdf.cell(200, 10, txt=f"{report_name} Report", ln=True, align='C')
+            pdf.cell(200, 10, txt="Aguida Multimodal Analyzer", ln=True, align='C')
 
             # Collect data from each frame and add to the PDF
             frames = [
@@ -222,7 +249,7 @@ class AguidaMultimodalAnalyzer(QMainWindow):
             pdf_dir = "generated_reports"
             os.makedirs(pdf_dir, exist_ok=True)
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
-            pdf_filename = os.path.join(pdf_dir, f"report_{timestamp}.pdf")
+            pdf_filename = os.path.join(pdf_dir, f"{report_name}_report_{timestamp}.pdf")
             pdf.output(pdf_filename)
 
             # Show success message
@@ -230,6 +257,7 @@ class AguidaMultimodalAnalyzer(QMainWindow):
 
         except Exception as e:
             QMessageBox.critical(self, "Error", f"Failed to generate PDF report:\n{str(e)}")
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
