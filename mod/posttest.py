@@ -15,6 +15,7 @@ class PostTestFrame(QFrame):
 
         self.layout = QVBoxLayout()
         self.setLayout(self.layout)
+        self.data = None  # Store processed data
 
         self.button_layout = QHBoxLayout()
         self.upload_button_post = QPushButton("Upload Post-Test File")
@@ -106,6 +107,13 @@ class PostTestFrame(QFrame):
         # Store the processed data
         self.test_data = post_test_wtc_data
 
+        # Store data
+        self.data = {
+            'confidence': self.average_post_confidence_score_updated,
+            'nervousness': self.average_post_nervousness_score_mean_imputed,
+            'wtc': self.average_post_wtc_score_updated
+        }
+
         # Display the scores in the Post-Test frame
         self.display_post_test_scores(self.average_post_confidence_score_updated, self.average_post_nervousness_score_mean_imputed,
                                       self.average_post_wtc_score_updated)
@@ -122,7 +130,7 @@ class PostTestFrame(QFrame):
         categories = ['Confidence', 'Nervousness', 'WtC']
         scores = [confidence, nervousness, wtc]
 
-        plt.figure(figsize=(4, 3))
+        plt.figure(figsize=(8, 5))
         plt.bar(categories, scores, color=['blue', 'orange', 'green'])
         plt.xlabel('Categories')
         plt.ylabel('Scores')
@@ -144,6 +152,7 @@ class PostTestFrame(QFrame):
         graph_label = QLabel()
         graph_label.setPixmap(pixmap)
         graph_label.setAlignment(Qt.AlignCenter)
+        graph_label.setMinimumSize(400, 400)
         self.layout.addWidget(graph_label)
 
     def generate_pdf_report(self):
@@ -167,7 +176,7 @@ class PostTestFrame(QFrame):
             pdf.image(self.graph_filename, x=10, y=None, w=100)
 
             # Ensure the pdf_exports directory exists
-            pdf_dir = "pdf_exports"
+            pdf_dir = "generated_reports"
             os.makedirs(pdf_dir, exist_ok=True)
 
             # Create a unique filename with timestamp
@@ -185,3 +194,6 @@ class PostTestFrame(QFrame):
 
     def get_test_data(self):
         return self.test_data
+
+    def get_data(self):
+        return self.data

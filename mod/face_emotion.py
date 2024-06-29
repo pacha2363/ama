@@ -1,3 +1,5 @@
+#mod/face_emotion.py
+
 import os
 import pandas as pd
 from PyQt5.QtWidgets import QVBoxLayout, QLabel, QFrame, QPushButton, QFileDialog, QScrollArea, QWidget, QHBoxLayout, QMessageBox, QTableWidget, QTableWidgetItem
@@ -18,6 +20,7 @@ class FaceEmotionFrame(QFrame):
         self.setFrameShape(QFrame.StyledPanel)
         self.layout = QVBoxLayout()
         self.setLayout(self.layout)
+        self.data = None  # Store processed data
 
         # Horizontal layout for buttons
         button_layout = QHBoxLayout()
@@ -89,6 +92,14 @@ class FaceEmotionFrame(QFrame):
                 QLabel(f"SVM Classification could not be performed as there is only one class in 'face_id'."))
         self.plot_graphs(combined_data)
         self.plot_data_distribution(combined_data, au_columns)
+
+        # Store data for access
+        self.data = {
+            'file_stats': file_stats,
+            'combined_data': combined_data.to_dict(),
+            'svm_report': self.svm_report if isinstance(self.svm_report, dict) else {},
+            'au_results': self.au_results
+        }
 
     def display_results(self, file_stats):
         self.clear_layout(self.results_layout)
@@ -226,7 +237,7 @@ class FaceEmotionFrame(QFrame):
 
     def generate_report(self):
         try:
-            output_dir = "pdf_exports"
+            output_dir = "generated_reports"
             os.makedirs(output_dir, exist_ok=True)
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
             pdf_filename = os.path.join(output_dir, f"face_emotion_report_{timestamp}.pdf")
@@ -305,7 +316,7 @@ class FaceEmotionFrame(QFrame):
 
     def generate_csv_report(self):
         try:
-            output_dir = "csv_exports"
+            output_dir = "generated_reports"
             os.makedirs(output_dir, exist_ok=True)
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
             csv_filename = os.path.join(output_dir, f"face_emotion_report_{timestamp}.csv")
@@ -331,3 +342,6 @@ class FaceEmotionFrame(QFrame):
 
         except Exception as e:
             QMessageBox.critical(self, "Error", f"Failed to generate CSV report:\n{str(e)}")
+
+    def get_data(self):
+        return self.data

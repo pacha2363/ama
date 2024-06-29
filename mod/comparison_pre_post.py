@@ -20,6 +20,7 @@ class ComparisonPrePostTestFrame(QFrame):
         self.setFrameShape(QFrame.StyledPanel)
         self.layout = QVBoxLayout()
         self.setLayout(self.layout)
+        self.data = None  # Store processed data
 
         self.pre_test_frame = pre_test_frame
         self.post_test_frame = post_test_frame
@@ -66,11 +67,11 @@ class ComparisonPrePostTestFrame(QFrame):
         pre_test_data = self.pre_test_frame.get_test_data()
         post_test_data = self.post_test_frame.get_test_data()
         self.process_comparison(pre_test_data, post_test_data)
-        self.export_button.setEnabled(True)  # Initially disabled
+        self.export_button.setEnabled(True)  # Enable the export button
 
     def export_comparison_to_pdf(self):
         try:
-            output_dir = "pdf_exports"
+            output_dir = "generated_reports"
             os.makedirs(output_dir, exist_ok=True)
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
             pdf_filename = os.path.join(output_dir, f"comparison_pre_post_test_results_{timestamp}.pdf")
@@ -83,6 +84,7 @@ class ComparisonPrePostTestFrame(QFrame):
                     if isinstance(results, dict):  # Ensure results is a dictionary
                         pre_score = results.get('pre_score', 'N/A')
                         post_score = results.get('post_score', 'N/A')
+                        percentage_change = results.get('percentage_change', 'N/A')
                         cohen_d = results.get('cohen_d', 'N/A')
                         wilcoxon_result = results.get('wilcoxon', 'N/A')
                         ttest_result = results.get('ttest', 'N/A')
@@ -90,6 +92,7 @@ class ComparisonPrePostTestFrame(QFrame):
                             f"{category} Comparison:\n"
                             f"Pre-Test: {pre_score:.2f}\n"
                             f"Post-Test: {post_score:.2f}\n"
+                            f"Percentage Change: {percentage_change:.2f}%\n"
                             f"Cohen's d: {cohen_d:.2f}\n"
                             f"Wilcoxon: W={wilcoxon_result.statistic:.2f}, p={wilcoxon_result.pvalue:.4f}\n"
                             f"Paired t-test: t={ttest_result.statistic:.2f}, p={ttest_result.pvalue:.4f}"
@@ -163,6 +166,11 @@ class ComparisonPrePostTestFrame(QFrame):
         average_post_nervousness_score = post_nervousness_scores.mean(axis=1).mean()
         average_post_wtc_score = post_wtc_scores.mean(axis=1).mean()
 
+        # Calculate percentage change for each category
+        percentage_change_confidence = ((average_post_confidence_score - average_pre_confidence_score) / average_pre_confidence_score) * 100
+        percentage_change_nervousness = ((average_post_nervousness_score - average_pre_nervousness_score) / average_pre_nervousness_score) * 100
+        percentage_change_wtc = ((average_post_wtc_score - average_pre_wtc_score) / average_pre_wtc_score) * 100
+
         # Calculate Cohen's d for each category
         cohen_d_confidence = self.calculate_cohens_d(pre_confidence_scores.mean(axis=1),
                                                      post_confidence_scores.mean(axis=1))
@@ -184,6 +192,7 @@ class ComparisonPrePostTestFrame(QFrame):
         self.comparison_results['Confidence'] = {
             'pre_score': average_pre_confidence_score,
             'post_score': average_post_confidence_score,
+            'percentage_change': percentage_change_confidence,
             'cohen_d': cohen_d_confidence,
             'wilcoxon': wilcoxon_confidence,
             'ttest': ttest_confidence
@@ -191,6 +200,7 @@ class ComparisonPrePostTestFrame(QFrame):
         self.comparison_results['Nervousness'] = {
             'pre_score': average_pre_nervousness_score,
             'post_score': average_post_nervousness_score,
+            'percentage_change': percentage_change_nervousness,
             'cohen_d': cohen_d_nervousness,
             'wilcoxon': wilcoxon_nervousness,
             'ttest': ttest_nervousness
@@ -198,20 +208,49 @@ class ComparisonPrePostTestFrame(QFrame):
         self.comparison_results['WtC'] = {
             'pre_score': average_pre_wtc_score,
             'post_score': average_post_wtc_score,
+            'percentage_change': percentage_change_wtc,
             'cohen_d': cohen_d_wtc,
             'wilcoxon': wilcoxon_wtc,
             'ttest': ttest_wtc
         }
 
+        # Store data for access
+        self.data = {
+            'confidence': {
+                'pre_score': average_pre_confidence_score,
+                'post_score': average_post_confidence_score,
+                'percentage_change': percentage_change_confidence,
+                'cohen_d': cohen_d_confidence,
+                'wilcoxon': wilcoxon_confidence,
+                'ttest': ttest_confidence
+            },
+            'nervousness': {
+                'pre_score': average_pre_nervousness_score,
+                'post_score': average_post_nervousness_score,
+                'percentage_change': percentage_change_nervousness,
+                'cohen_d': cohen_d_nervousness,
+                'wilcoxon': wilcoxon_nervousness,
+                'ttest': ttest_nervousness
+            },
+            'wtc': {
+                'pre_score': average_pre_wtc_score,
+                'post_score': average_post_wtc_score,
+                'percentage_change': percentage_change_wtc,
+                'cohen_d': cohen_d_wtc,
+                'wilcoxon': wilcoxon_wtc,
+                'ttest': ttest_wtc
+            }
+        }
+
         # Display the comparison scores
         self.display_comparison_scores(self.confidence_layout, average_pre_confidence_score,
                                        average_post_confidence_score, cohen_d_confidence, wilcoxon_confidence,
-                                       ttest_confidence, 'Confidence')
+                                       ttest_confidence, 'Confidence', percentage_change_confidence)
         self.display_comparison_scores(self.nervousness_layout, average_pre_nervousness_score,
                                        average_post_nervousness_score, cohen_d_nervousness, wilcoxon_nervousness,
-                                       ttest_nervousness, 'Nervousness')
+                                       ttest_nervousness, 'Nervousness', percentage_change_nervousness)
         self.display_comparison_scores(self.wtc_layout, average_pre_wtc_score, average_post_wtc_score, cohen_d_wtc,
-                                       wilcoxon_wtc, ttest_wtc, 'WtC')
+                                       wilcoxon_wtc, ttest_wtc, 'WtC', percentage_change_wtc)
 
         # Display the comparison graph
         self.display_comparison_graph(average_pre_confidence_score, average_post_confidence_score,
@@ -266,11 +305,12 @@ class ComparisonPrePostTestFrame(QFrame):
         return cohen_d
 
     def display_comparison_scores(self, layout, pre_score, post_score, cohen_d, wilcoxon_result, ttest_result,
-                                  category):
+                                  category, percentage_change):
         scores_text = (
             f"{category} Comparison:\n"
             f"Pre-Test: {pre_score:.2f}\n"
             f"Post-Test: {post_score:.2f}\n"
+            f"Percentage Change: {percentage_change:.2f}%\n"
             f"Cohen's d: {cohen_d:.2f}\n"
             f"Wilcoxon: W={wilcoxon_result.statistic:.2f}, p={wilcoxon_result.pvalue:.4f}\n"
             f"Paired t-test: t={ttest_result.statistic:.2f}, p={ttest_result.pvalue:.4f}"
@@ -296,7 +336,7 @@ class ComparisonPrePostTestFrame(QFrame):
         plt.legend()
 
         # Ensure the Output directory exists
-        output_dir = "Output"
+        output_dir = "generate_graphs"
         os.makedirs(output_dir, exist_ok=True)
 
         # Create a unique filename with timestamp
@@ -366,3 +406,6 @@ class ComparisonPrePostTestFrame(QFrame):
         ax.text(0.5, 0.5, text, transform=ax.transAxes, ha='center', va='center', wrap=True)
         ax.axis('off')
         return fig
+
+    def get_data(self):
+        return self.data

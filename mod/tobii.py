@@ -22,6 +22,7 @@ class TobiiFrame(QFrame):
         self.setFrameShape(QFrame.StyledPanel)
         self.layout = QVBoxLayout()
         self.setLayout(self.layout)
+        self.data = None  # Store processed data
 
         # Horizontal layout for buttons
         button_layout = QHBoxLayout()
@@ -87,6 +88,20 @@ class TobiiFrame(QFrame):
 
         # Perform SVM Analysis
         self.perform_svm(combined_data)
+
+        # Store data for access
+        self.data = {
+            'left_eye_x_avg': self.left_eye_x_avg,
+            'left_eye_y_avg': self.left_eye_y_avg,
+            'right_eye_x_avg': self.right_eye_x_avg,
+            'right_eye_y_avg': self.right_eye_y_avg,
+            'head_pos_x_avg': self.head_pos_x_avg,
+            'head_pos_y_avg': self.head_pos_y_avg,
+            'head_pos_z_avg': self.head_pos_z_avg,
+            'ancova_results': self.ancova_results if hasattr(self, 'ancova_results') else None,
+            'svm_report': self.svm_report if hasattr(self, 'svm_report') else None,
+            'combined_data': combined_data.to_dict()
+        }
 
     def display_results(self):
         self.clear_layout(self.results_layout)
@@ -166,7 +181,7 @@ class TobiiFrame(QFrame):
 
     def generate_report(self):
         try:
-            output_dir = "pdf_exports"
+            output_dir = "generated_reports"
             os.makedirs(output_dir, exist_ok=True)
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
             pdf_filename = os.path.join(output_dir, f"tobii_report_{timestamp}.pdf")
@@ -229,3 +244,6 @@ class TobiiFrame(QFrame):
 
         except Exception as e:
             QMessageBox.critical(self, "Error", f"Failed to generate PDF report:\n{str(e)}")
+
+    def get_data(self):
+        return self.data

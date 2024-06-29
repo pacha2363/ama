@@ -1,8 +1,7 @@
 # mod/heartrate.py
-
 import os
 import pandas as pd
-from PyQt5.QtWidgets import QVBoxLayout, QLabel, QFrame, QPushButton, QFileDialog, QMessageBox, QHBoxLayout, QScrollArea, QWidget
+from PyQt5.QtWidgets import QVBoxLayout, QLabel, QFrame, QPushButton, QFileDialog, QMessageBox, QHBoxLayout
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import numpy as np
@@ -16,7 +15,6 @@ class HeartRateFrame(QFrame):
         self.setFrameShape(QFrame.StyledPanel)
         self.layout = QVBoxLayout()
         self.setLayout(self.layout)
-        self.data = None  # Store processed data
 
         # Horizontal layout for buttons
         button_layout = QHBoxLayout()
@@ -31,13 +29,8 @@ class HeartRateFrame(QFrame):
 
         self.layout.addLayout(button_layout)
 
-        # Scrollable area for results
-        self.scroll_area = QScrollArea()
-        self.scroll_area.setWidgetResizable(True)
-        self.scroll_area_widget = QWidget()
-        self.results_layout = QVBoxLayout(self.scroll_area_widget)
-        self.scroll_area.setWidget(self.scroll_area_widget)
-        self.layout.addWidget(self.scroll_area)
+        self.results_layout = QVBoxLayout()
+        self.layout.addLayout(self.results_layout)
 
         self.heart_rate_files = []
 
@@ -84,29 +77,6 @@ class HeartRateFrame(QFrame):
             self.mode = heart_rate_data.mode()[0] if not heart_rate_data.mode().empty else None
             self.ci_low, self.ci_high = stats.norm.interval(0.95, loc=self.avg,
                                                             scale=self.std_dev / np.sqrt(self.count))
-
-
-            # Store data for access
-            self.data = {
-                'Number of Files Uploaded': len(self.heart_rate_files),
-                'Average Heart Rate': self.avg,
-                'Standard Deviation': self.std_dev,
-                'Maximum Heart Rate': self.max_val,
-                'Minimum Heart Rate': self.min_val,
-                'Median Heart Rate': self.median_val,
-                '1st Quartile (Q1)': self.q1,
-                '3rd Quartile (Q3)': self.q3,
-                'Range': self.range_val,
-                'Interquartile Range (IQR)': self.iqr,
-                'Total Duration (records)': self.total_duration,
-                'Count of Records': self.count,
-                'Variance': self.variance,
-                'Skewness': self.skewness,
-                'Kurtosis': self.kurtosis,
-                'Mode': self.mode,
-                '95% Confidence Interval': (self.ci_low, self.ci_high)
-            }
-
 
             self.display_results()
             self.plot_graph(heart_rate_data)
@@ -181,7 +151,6 @@ class HeartRateFrame(QFrame):
 
         # Add the graph to the results layout
         canvas = FigureCanvas(fig)
-        canvas.setMinimumSize(400, 400)
         self.results_layout.addWidget(canvas)
 
         # Save the graph filename for PDF export
@@ -199,7 +168,6 @@ class HeartRateFrame(QFrame):
 
         # Add the histogram to the results layout
         canvas = FigureCanvas(fig)
-        canvas.setMinimumSize(400, 400)
         self.results_layout.addWidget(canvas)
 
         # Save the histogram filename for PDF export
@@ -264,9 +232,6 @@ class HeartRateFrame(QFrame):
 
         except Exception as e:
             QMessageBox.critical(self, "Error", f"Failed to generate PDF report:\n{str(e)}")
-
-    def get_data(self):
-        return self.data
 
 """
 Median Heart Rate: The middle value when the heart rates are sorted.
