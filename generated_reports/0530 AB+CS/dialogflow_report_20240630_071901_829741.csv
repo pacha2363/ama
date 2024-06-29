@@ -1,0 +1,149 @@
+Type,Value,Count
+Utterance,Awesome!,84
+Utterance,Take it easy,36
+Utterance,"(Come on, you can do it...)",18
+Utterance, ,14
+Utterance,I can understand how you feel...,14
+Utterance,Great!,12
+Utterance, My pleasure! ,10
+Utterance,Please come again,9
+Utterance, thank you,8
+Utterance, I've got it. Thank you for your order.,7
+Utterance, Here is your table.,5
+Utterance, And this is the menu. Please call me when you are ready to order.,5
+Utterance, Oh really? I'm very glad to hear that.,5
+Utterance," Excuse me, here is your bill... ",5
+Utterance, Here you are. Enjoy your meal! ,5
+Utterance, Did you enjoy?,4
+Utterance, Thank you for coming today and hope to see you soon.,4
+Utterance, Sure! Please come this way.,4
+Utterance,Please repeat that...,4
+Utterance,"Good evening, did you book a table?",4
+Utterance, Sure. What about food?,4
+Utterance,Could you say that again?,4
+Utterance," Yes, how can I help you? ",4
+Utterance,"Sorry I'm a bit lost, I don't understand...",3
+Utterance," Oh, you are already leaving? Ok, just a moment please... ",3
+Utterance, no thank you,3
+Utterance, You are welcome! ,3
+Utterance, Just a moment please...,3
+Utterance, May I have your name please?,3
+Utterance, Here you are!,3
+Utterance, yes,3
+Utterance, peter,2
+Utterance, Sorry but you have to order at least one drink! ,2
+Utterance,Could you say that again slowly?,2
+Utterance," That's alright, thank you. ",2
+Utterance,More drink? more food?,2
+Utterance,  ,2
+Utterance, Thank you. It's good to hear that.,2
+Utterance,  yes,2
+Utterance,Could you simplify it for me?,2
+Utterance," Alright, thank you. ",2
+Utterance, Sure. Anything to drink?,2
+Utterance, Here you are. Enjoy your drink! ,2
+Utterance,"This is embarrasing, I still can't get you...",2
+Utterance, see you,2
+Utterance, okay,2
+Utterance,Very sorry but It is  time for last orders. Would you have anything else?,2
+Utterance,"Pardon me, could you clarify what you mean?",2
+Utterance, well cool cool,1
+Utterance, mango juice,1
+Utterance, the city,1
+Utterance, pizza,1
+Utterance, can i see so be,1
+Utterance, also i would you like chicago don't oh i want the always years i say week,1
+Utterance, dave be is delicious,1
+Utterance, i would you i would you like orange juice i feed each,1
+Utterance, thanks,1
+Utterance, Sweet! What would like to order?,1
+Utterance, i have always you,1
+Utterance,also i would you like chicago don't,1
+Utterance, i would you ride beef steak,1
+Utterance, a thoroughly can you ah junior your brain ah couple water,1
+Utterance, yes my name is worker,1
+Utterance," Good evening, did you book a table?",1
+Utterance, how much a each,1
+Utterance, but is being a stay on the hook it up,1
+Utterance, no so,1
+Utterance, the them potato police,1
+Utterance, peace out pretty,1
+Utterance, up pretty,1
+Utterance, fifa on a boat sort of for pretty,1
+Utterance, sarah that pretty,1
+Utterance, follow that for days,1
+Utterance, stay on some other pretty,1
+Utterance, that is being spent on the forever,1
+Utterance, please call ease orange juice and have been mistake,1
+Utterance,"Sorry, please help me understand you...",1
+Utterance, Alright! Let me guide you to your table then.,1
+Utterance, i would do like nonsmoking smoking the table,1
+Utterance, hundred tonight nonsmoking the table,1
+Utterance, Let see... Would you like smoking or non smoking table?,1
+Utterance, the people because cleaver,1
+Utterance, hello,1
+Utterance,"Nihongo wa muzukashii kedo, chotto dake ganbaru",1
+Utterance,Did you call us before coming?,1
+Utterance,"(Take it easy, you're doing great...)",1
+Utterance, or and teachers priests,1
+Utterance, i will pay the main use their,1
+Utterance, sarah,1
+Utterance, can i order order and issues,1
+Utterance, yeah,1
+Utterance,We are ending this dialogue for now...,1
+Utterance, fine,1
+Utterance, bye good boy,1
+Utterance,by,1
+Utterance, go yes thank you,1
+Utterance, what should i say,1
+Utterance, good bye,1
+Utterance, thank you so much good boy,1
+Utterance," So Sorry, we just took last orders.",1
+Utterance, where is your last order restorative,1
+Utterance, oh thank you,1
+Utterance, i'll come here again,1
+Utterance, i played ball so back to my home,1
+Utterance, i'd like to order orange juice,1
+Utterance, coca cola please,1
+Utterance, coca cola beef steak and solid police,1
+Utterance, excuse me i'd like to order,1
+Utterance, my name is ruby,1
+Utterance, group be tehran issue,1
+Utterance, i am really care about issue,1
+Utterance, my name is cause her pentagon,1
+Utterance, cora played,1
+Utterance, solid reads,1
+Utterance, using,1
+Utterance, count my older older tissues,1
+Utterance, can i order is a potato,1
+Utterance, potato,1
+Utterance, brain tissues and sort other,1
+Utterance, can i order some schools,1
+Utterance, oh yeah japanese,1
+Utterance, hamburger,1
+Utterance, no,1
+Utterance, i guess,1
+Utterance,  i've gotten,1
+Utterance, turn out great,1
+Utterance, i enjoy to serve list than thank you,1
+Utterance, oh i see,1
+Utterance," No worries, you have already paid!",1
+Utterance, oh we're a bit,1
+Utterance, she you,1
+Utterance, and your thank you,1
+Utterance, oh mercy is this menu,1
+Utterance, how much he is it,1
+Utterance, beef steak great,1
+Utterance, yes i enjoy,1
+Category,Peter Utterance,300
+Category,User Utterance,124
+Strategy,AB+CS,424
+Metric,Value
+count,424.0
+mean,0.0
+std,0.0
+min,0.0
+25%,0.0
+50%,0.0
+75%,0.0
+max,0.0

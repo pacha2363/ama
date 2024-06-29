@@ -1,0 +1,103 @@
+Type,Value,Count
+Utterance,Awesome!,14
+Utterance, I've got it. Thank you for your order.,9
+Utterance, thank you,9
+Utterance, My pleasure! ,9
+Utterance, And this is the menu. Please call me when you are ready to order.,8
+Utterance, Here you are. Enjoy your meal! ,8
+Utterance, Oh really? I'm very glad to hear that.,6
+Utterance, Did you enjoy?,6
+Utterance," Excuse me, here is your bill... ",6
+Utterance, ,5
+Utterance, Thank you for coming today and hope to see you soon.,5
+Utterance, Here is your table.,5
+Utterance, Sure! Please come this way.,4
+Utterance, Sure. What about food?,4
+Utterance, May I have your name please?,4
+Utterance,"(Come on, you can do it...)",3
+Utterance," Alright, thank you. ",3
+Utterance," Oh, you are already leaving? Ok, just a moment please... ",3
+Utterance,Take it easy,2
+Utterance,More drink? more food?,2
+Utterance, You are welcome! ,2
+Utterance, yeah,2
+Utterance,Great!,2
+Utterance,Could you say that again slowly?,2
+Utterance,Could you simplify it for me?,2
+Utterance, do,2
+Utterance, okay,2
+Utterance, Sure. Anything to drink?,2
+Utterance,Very sorry but It is  time for last orders. Would you have anything else?,2
+Utterance, good bye see you,2
+Utterance, Alright! Let me guide you to your table then.,2
+Utterance, Let see... Would you like smoking or non smoking table?,2
+Utterance, yes,2
+Utterance, i would you like followed i'm beef steak and drinks ah i night coca cola,1
+Utterance,thank you,1
+Utterance,Could you say that again?,1
+Utterance, peace out for you,1
+Utterance, no it is okay,1
+Utterance, place non smoking table,1
+Utterance, i enjoy thank you,1
+Utterance, the,1
+Utterance,  no,1
+Utterance, yeah i like non smoking thing,1
+Utterance, bought a soda,1
+Utterance, dick,1
+Utterance, the beef steak,1
+Utterance, q,1
+Utterance, i it so hi i don't thank dude,1
+Utterance, Sweet! What would like to order?,1
+Utterance, i'd i'd do beef steak,1
+Utterance, the air,1
+Utterance, don't despair,1
+Utterance, yes i did,1
+Utterance, one is my name is ruby their on issue,1
+Utterance, excuse me please orange juice and salary pathetic,1
+Utterance, beef steak,1
+Utterance, more orange juice breeds,1
+Utterance, Here you are. Enjoy your drink! ,1
+Utterance, no thank you,1
+Utterance, blaze orange juice,1
+Utterance, i want to eat beef steak and potato,1
+Utterance, coca cola please,1
+Utterance, no i don't have a reservation,1
+Utterance, this tower the eighth grade,1
+Utterance, thank you days were delicious how much you think,1
+Utterance, Thank you. It's good to hear that.,1
+Utterance, how much is,1
+Utterance, yeah i enjoyed this man,1
+Utterance, for i do,1
+Utterance, my name me get out his unique,1
+Utterance, my name is he city,1
+Utterance, my name is walker,1
+Utterance, and when i went to our coca cola and,1
+Utterance, i want to put that potato i went to pizza,1
+Utterance, by,1
+Utterance, i haven't decided yet,1
+Utterance, after eating how can i pay money,1
+Utterance,Was it a good time?,1
+Utterance, have next day,1
+Utterance,We are ending this dialogue for now...,1
+Utterance, yeah i have about is,1
+Utterance,"Good evening, did you book a table?",1
+Utterance, couldn't my name is other tv know,1
+Utterance, what happened,1
+Utterance,  oh haven't decided yet could you put he could you wait please,1
+Utterance, a coca cola on both sara sara the under potato,1
+Utterance, please coca cola,1
+Utterance, yes i do,1
+Utterance, please for the under potato,1
+Utterance, yes of course,1
+Category,Peter Utterance,124
+Category,User Utterance,89
+Strategy,CS,213
+Metric,Value
+count,213.0
+mean,0.0
+std,0.0
+min,0.0
+25%,0.0
+50%,0.0
+75%,0.0
+max,0.0
